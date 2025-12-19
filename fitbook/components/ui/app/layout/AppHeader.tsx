@@ -100,7 +100,7 @@ export function AppHeader() {
                                 <MenuIcon className="h-5 w-5" />
                             </button>
                         </SheetTrigger>
-                        <SheetContent side="right" className="w-[320px] sm:w-[380px]">
+                        <SheetContent side="right" className="w-[320px] sm:w-95">
                             <SheetHeader className="border-b">
                                 <SheetTitle className="text-left text-xl font-semibold">
                                     Menu
