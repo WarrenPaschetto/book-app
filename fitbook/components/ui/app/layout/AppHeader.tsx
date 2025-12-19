@@ -8,6 +8,7 @@ import {
     SignInButton,
     UserButton,
     useAuth,
+    SignOutButton,
 } from "@clerk/nextjs";
 import { cn } from "@/lib/utils";
 import {
@@ -129,7 +130,7 @@ export function AppHeader() {
                                         );
                                     })}
                                 <SignedOut>
-                                    <div className="mt-6 border-t pt-6">
+                                    <div className={`${isSignedIn ? "mt-6 border-t pt-6" : "mt-0"} `}>
                                         <SignInButton mode="modal">
                                             <button
                                                 type="button"
@@ -140,6 +141,18 @@ export function AppHeader() {
                                         </SignInButton>
                                     </div>
                                 </SignedOut>
+                                <SignedIn>
+                                    <div className="mt-6 border-t pt-6">
+                                        <SignOutButton>
+                                            <button
+                                                type="button"
+                                                className="w-full rounded-lg bg-primary px-6 py-3 text-base font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90"
+                                            >
+                                                Sign Out
+                                            </button>
+                                        </SignOutButton>
+                                    </div>
+                                </SignedIn>
                             </nav>
                         </SheetContent>
                     </Sheet>
