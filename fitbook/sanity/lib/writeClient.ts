@@ -2,6 +2,10 @@ import { createClient } from "next-sanity";
 
 import { apiVersion, dataset, projectId } from "../env";
 
+if (!process.env.SANITY_API_TOKEN) {
+    throw new Error("Missing SANITY_API_TOKEN environment variable");
+}
+
 // Write client with token for mutations
 export const writeClient = createClient({
     projectId,

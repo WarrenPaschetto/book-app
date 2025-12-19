@@ -3,14 +3,14 @@ import Image from "next/image";
 import { CheckCircleIcon, Clock, MapPin, User } from "lucide-react";
 import { urlFor } from "@/sanity/lib/image";
 import { format } from "date-fns";
-import type { FILTERED_SESSIONS_QUERYResult } from "@/sanity.types";
+import type { FILTERED_SESSIONS_QUERY_RESULT } from "@/sanity.types";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { TIER_COLORS } from "@/lib/constants/subscription";
 import { formatDistance } from "@/lib/utils/distance";
 
 // Session type from the query result (with distance added by client-side filtering)
-type Session = FILTERED_SESSIONS_QUERYResult[number];
+type Session = FILTERED_SESSIONS_QUERY_RESULT[number];
 
 interface SessionCardProps {
     session: Session;
@@ -30,7 +30,8 @@ export function SessionCard({
     const spotsRemaining = maxCapacity - session.currentBookings;
     const isFullyBooked = spotsRemaining <= 0;
     const startDate = new Date(startTime);
-    const tierLevel = activity.tierLevel ?? "basic";
+    // ensure tierLevel is a valid key for TIER_COLORS to avoid indexing with `any`
+    const tierLevel = (activity.tierLevel ?? "basic") as keyof typeof TIER_COLORS;
 
     return (
         <Link href={`/classes/${session._id}`}>
@@ -54,7 +55,7 @@ export function SessionCard({
                     )}
 
                     {/* Gradient overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+                    <div className="absolute inset-0 bg-linear-to-t from-black/60 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
 
                     {/* Tier Badge */}
                     <Badge
@@ -91,7 +92,7 @@ export function SessionCard({
                 </div>
 
                 {/* Content */}
-                <CardContent className="p-4 !px-4">
+                <CardContent className="p-4 px-4!">
                     <h3 className="line-clamp-1 text-lg font-semibold transition-colors group-hover:text-primary">
                         {activity.name}
                     </h3>
